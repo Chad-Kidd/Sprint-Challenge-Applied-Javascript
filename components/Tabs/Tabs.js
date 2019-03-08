@@ -4,7 +4,7 @@ class TabLink {
     this.tabElement = tabElement;
     
     // Get the `data-tab` value from this.tabElement and store it here
-    this.tabData = this.element.dataset.tab; 
+    this.tabData = this.tabElement.dataset.tab; 
     
     // We need to find out if a user clicked 'all' cards or a specific category.  Follow the instructions below to accomplish this task:    
     
@@ -15,7 +15,7 @@ class TabLink {
       this.cards = document.querySelectorAll(".card");
     } else {
       // else if `all` is false, only select the cards with matching this.tabData values
-      this.cards = document.querySelector(`.card[data-tab="${this.tabData}"]`);
+      this.cards = document.querySelectorAll(`.card[data-tab="${this.tabData}"]`);
     }
     
 
@@ -23,12 +23,13 @@ class TabLink {
     this.cards = Array.from(this.cards).map(item => new TabCard(item));
 
     // Add a click event that invokes this.selectTab
-    this.tabElement.addEventListener('click', () => {this.selectTab()});
+    this.tabElement.addEventListener('click', () => this.selectTab());
   }
 
   selectTab(){
 
     // Select all elements with the .tab class on them
+    //keyword all QSALL
     const tabs = document.querySelectorAll(".tab");
     
     // Iterate through the NodeList removing the .active-tab class from each element
@@ -36,6 +37,7 @@ class TabLink {
     //   current.classList.remove(".active-tab"));
     // }
     tabs.forEach(item => item.classList.remove('.active-tab'));
+    
     // Select all of the elements with the .card class on them
     const cards = document.querySelectorAll(".card");
 
@@ -71,5 +73,10 @@ class TabCard {
 - In your .forEach() method's callback function, return a new instance of TabLink and pass in each tab as a parameter
 
 */
-let tabs = document.querySelectorAll(".tab");
-tabs.forEach( item =>  new TabLink(item));
+let tabs = document.querySelectorAll(".tab").forEach(tabs => {
+  new TabLink(tabs);
+});
+// tabs.forEach( item =>  new TabLink(item));
+// tabs.forEach(function(item) {
+//   return new TabLink(item);
+// });
